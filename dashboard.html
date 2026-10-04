@@ -1,77 +1,354 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.auth-panel');
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CloudForce | Premium Cloud Gaming</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="dashboard-page">
+    <div class="dashboard-shell">
+      <header class="topbar">
+        <div class="brand-cluster">
+          <div class="brand-mark"><span></span></div>
+          <h2>CloudForce</h2>
+        </div>
 
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((item) => item.classList.toggle('active', item === tab));
-      panels.forEach((panel) => {
-        const isActive = panel.id === `${tab.dataset.tab}-panel`;
-        panel.classList.toggle('active', isActive);
-      });
-    });
-  });
+        <div class="top-actions">
+          <div class="status-pill"><span class="dot"></span> Live infra stable</div>
 
-  const openModalButton = document.querySelector('.soft-button.primary');
-  const modal = document.getElementById('librarySyncModal');
-  const closeModalButton = document.querySelector('.modal-close');
+          <div class="select-shell">
+            <select id="serverSelect" aria-label="Select a data center">
+              <option value="va">US East (Virginia)</option>
+              <option value="or">US West (Oregon)</option>
+            </select>
+            <span id="serverStatusClass" class="signal optimal">●</span>
+          </div>
 
-  if (openModalButton && modal) {
-    openModalButton.addEventListener('click', () => modal.classList.add('is-visible'));
-  }
+          <button class="soft-button primary" type="button">Library Sync</button>
+          <button class="soft-button" type="button">Data Center Optimization</button>
+        </div>
+      </header>
 
-  if (closeModalButton && modal) {
-    closeModalButton.addEventListener('click', () => modal.classList.remove('is-visible'));
-  }
+      <div class="dashboard-headline">
+        <h3>Cloud architecture & live server telemetry</h3>
 
-  if (modal) {
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) modal.classList.remove('is-visible');
-    });
-  }
+        <div class="account-badges">
+          <span class="account-badge">Welcome, GamerTag_99</span>
+          <span class="account-badge">Epic Games Store</span>
+          <span class="account-badge">Steam</span>
+          <span class="account-badge">Xbox Live</span>
+        </div>
+      </div>
 
-  const serverSelect = document.getElementById('serverSelect');
-  const latencyText = document.getElementById('latencyText');
-  const routeLatency = document.getElementById('routeLatency');
-  const statusClass = document.getElementById('serverStatusClass');
-  const routeValue = document.getElementById('routeValue');
+      <section class="telemetry-grid">
+        <div class="server-pool-wrap">
+          <article class="panel">
+            <div class="panel-header">
+              <h4>Fortnite Cloud Nodes</h4>
+              <span class="mini-tag">Epic optimized</span>
+            </div>
+            <div class="panel-body">
+              <div class="metric-stack">
+                <div class="metric">
+                  <span class="label">Instances Active</span>
+                  <span class="value">1,420</span>
+                </div>
+                <div class="metric">
+                  <span class="label">Server Tick Rate</span>
+                  <span class="value">30Hz / 60Hz Dynamic</span>
+                </div>
+                <div class="metric">
+                  <span class="label">CPU Utilization</span>
+                  <span class="value">74%</span>
+                </div>
+                <div class="metric">
+                  <span class="label">State</span>
+                  <span class="value green">Hyper-Sync Connected</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-  if (serverSelect) {
-    serverSelect.addEventListener('change', () => {
-      const value = serverSelect.value;
-      if (value === 'va') {
-        latencyText.textContent = '12ms';
-        latencyText.className = 'latency optimal';
-        routeLatency.textContent = '8ms';
-        routeLatency.className = 'latency optimal';
-        routeValue.textContent = 'Fortnite Fast-Path Route';
-        if (statusClass) statusClass.className = 'signal optimal';
-      } else {
-        latencyText.textContent = '45ms';
-        latencyText.className = 'latency good';
-        routeLatency.textContent = '14ms';
-        routeLatency.className = 'latency good';
-        routeValue.textContent = 'Standard CloudPlay Route';
-        if (statusClass) statusClass.className = 'signal good';
-      }
-    });
-  }
+          <article class="panel">
+            <div class="panel-header">
+              <h4>General CloudPlay VMs</h4>
+              <span class="mini-tag">Streaming pool</span>
+            </div>
+            <div class="panel-body">
+              <div class="metric-stack">
+                <div class="metric">
+                  <span class="label">GPU Allocation</span>
+                  <span class="value">RTX 4080 Web-Clusters</span>
+                </div>
+                <div class="metric">
+                  <span class="label">Available Nodes</span>
+                  <span class="value">412</span>
+                </div>
+                <div class="metric">
+                  <span class="label">Frame Buffer</span>
+                  <span class="value">120 FPS Stable</span>
+                </div>
+                <div class="metric">
+                  <span class="label">State</span>
+                  <span class="value green">Batching online</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
 
-  const stressButton = document.querySelector('.primary-cta');
-  if (stressButton) {
-    stressButton.addEventListener('click', () => {
-      if (serverSelect) {
-        const current = serverSelect.value;
-        const nextPing = current === 'va' ? '8ms' : '14ms';
-        if (routeLatency) {
-          routeLatency.textContent = nextPing;
-          routeLatency.className = `latency ${current === 'va' ? 'optimal' : 'good'}`;
-        }
-        if (latencyText) {
-          latencyText.textContent = current === 'va' ? '12ms' : '45ms';
-          latencyText.className = `latency ${current === 'va' ? 'optimal' : 'good'}`;
-        }
-      }
-    });
-  }
-});
+        <aside class="panel route-panel">
+          <div class="panel-header">
+            <h4>Smart Routing &amp; Ping Optimization</h4>
+          </div>
+
+          <div class="map-box">
+            <div class="pin"></div>
+            <div class="pin target"></div>
+            <div class="map-line"></div>
+          </div>
+
+          <div class="route-list">
+            <div class="route-item">
+              <span class="name" id="routeValue">Fortnite Fast-Path Route</span>
+              <span class="latency optimal" id="routeLatency">8ms</span>
+            </div>
+            <div class="route-item">
+              <span class="name">Standard CloudPlay Route</span>
+              <span class="latency good">14ms</span>
+            </div>
+          </div>
+
+          <button class="primary-cta" type="button">Run Network Stress Test &amp; Ping Refresh</button>
+        </aside>
+      </section>
+
+      <section class="library-banner">
+        <div>
+          <h4>Game library</h4>
+          <div class="meta">Linked to Epic, Steam, and Xbox Live verification</div>
+        </div>
+
+        <div class="status-row">
+          <span class="status-chip">Connection secure</span>
+          <span class="status-chip">Latency: <strong id="latencyText">12ms</strong></span>
+        </div>
+      </section>
+
+      <section class="games-grid">
+        <article class="game-card">
+          <div class="card-thumb fortnite">
+            <div class="badge-row">
+              <span class="ownership-badge">Epic Games Verified</span>
+              <span class="rating-badge">T</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">Fortnite</span>
+              <button class="card-action primary" type="button">Boot Epic Container</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>Fortnite</h5>
+              <span class="status-indicator">Ready</span>
+            </div>
+            <div class="game-meta">
+              <span>Teen (13+)</span>
+              <span>4K / 120 FPS</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 9ms</span>
+              <span class="chip">FPS: 120</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 9ms</span>
+            <span>FPS: 120</span>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-thumb cod">
+            <div class="badge-row">
+              <span class="ownership-badge">Xbox / Activision Linked</span>
+              <span class="rating-badge">M</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">COD</span>
+              <button class="card-action secondary" type="button">RTX On</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>Black Ops 6</h5>
+              <span class="status-indicator">Online</span>
+            </div>
+            <div class="game-meta">
+              <span>Mature 17+</span>
+              <span>Ultra settings</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 11ms</span>
+              <span class="chip">FPS: 120</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 11ms</span>
+            <span>FPS: 120</span>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-thumb gta">
+            <div class="badge-row">
+              <span class="ownership-badge">Steam Linked</span>
+              <span class="rating-badge">M</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">GTA V</span>
+              <button class="card-action secondary" type="button">Ready to Launch</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>GTA V</h5>
+              <span class="status-indicator">Synced</span>
+            </div>
+            <div class="game-meta">
+              <span>Mature 17+</span>
+              <span>Open world</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 12ms</span>
+              <span class="chip">FPS: 120</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 12ms</span>
+            <span>FPS: 120</span>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-thumb inzoi">
+            <div class="badge-row">
+              <span class="ownership-badge">Steam Verified</span>
+              <span class="rating-badge">12</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">inZOI</span>
+              <button class="card-action secondary" type="button">Launch</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>inZOI</h5>
+              <span class="status-indicator">Queued</span>
+            </div>
+            <div class="game-meta">
+              <span>Teen (13+) / PEGI 12</span>
+              <span>Photoreal sim</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 10ms</span>
+              <span class="chip">FPS: 120</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 10ms</span>
+            <span>FPS: 120</span>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-thumb cyberpunk">
+            <div class="badge-row">
+              <span class="ownership-badge">Steam Verified</span>
+              <span class="rating-badge">M</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">Cyberpunk</span>
+              <button class="card-action secondary" type="button">Ultra Low Latency</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>Cyberpunk 2077</h5>
+              <span class="status-indicator">Optimized</span>
+            </div>
+            <div class="game-meta">
+              <span>Mature 17+</span>
+              <span>RTX path</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 8ms</span>
+              <span class="chip">FPS: 120</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 8ms</span>
+            <span>FPS: 120</span>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-thumb cs2">
+            <div class="badge-row">
+              <span class="ownership-badge">Steam Verified</span>
+              <span class="rating-badge">M</span>
+            </div>
+            <div class="card-bottom">
+              <span class="game-label">CS2</span>
+              <button class="card-action secondary" type="button">Ping: 5ms</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="game-title-row">
+              <h5>Counter-Strike 2</h5>
+              <span class="status-indicator">Competitive</span>
+            </div>
+            <div class="game-meta">
+              <span>Mature 17+</span>
+              <span>Match ready</span>
+            </div>
+            <div class="stream-config">
+              <span class="chip">Expected Ping: 5ms</span>
+              <span class="chip">FPS: 240</span>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <span>Expected Ping: 5ms</span>
+            <span>FPS: 240</span>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <div id="librarySyncModal" class="modal-overlay" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h4>Library Sync Status</h4>
+          <button class="modal-close" type="button">×</button>
+        </div>
+
+        <div class="modal-list">
+          <div class="sync-row">
+            <span>Epic Games Store</span>
+            <span class="status ok">Required for Fortnite</span>
+          </div>
+          <div class="sync-row">
+            <span>Steam</span>
+            <span class="status ok">Required for GTA V, inZOI, Cyberpunk 2077, and CS2</span>
+          </div>
+          <div class="sync-row">
+            <span>Xbox Live / Activision</span>
+            <span class="status ok">Required for Call of Duty: Black Ops 6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
