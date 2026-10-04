@@ -1,0 +1,77 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.auth-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((item) => item.classList.toggle('active', item === tab));
+      panels.forEach((panel) => {
+        const isActive = panel.id === `${tab.dataset.tab}-panel`;
+        panel.classList.toggle('active', isActive);
+      });
+    });
+  });
+
+  const openModalButton = document.querySelector('.soft-button.primary');
+  const modal = document.getElementById('librarySyncModal');
+  const closeModalButton = document.querySelector('.modal-close');
+
+  if (openModalButton && modal) {
+    openModalButton.addEventListener('click', () => modal.classList.add('is-visible'));
+  }
+
+  if (closeModalButton && modal) {
+    closeModalButton.addEventListener('click', () => modal.classList.remove('is-visible'));
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) modal.classList.remove('is-visible');
+    });
+  }
+
+  const serverSelect = document.getElementById('serverSelect');
+  const latencyText = document.getElementById('latencyText');
+  const routeLatency = document.getElementById('routeLatency');
+  const statusClass = document.getElementById('serverStatusClass');
+  const routeValue = document.getElementById('routeValue');
+
+  if (serverSelect) {
+    serverSelect.addEventListener('change', () => {
+      const value = serverSelect.value;
+      if (value === 'va') {
+        latencyText.textContent = '12ms';
+        latencyText.className = 'latency optimal';
+        routeLatency.textContent = '8ms';
+        routeLatency.className = 'latency optimal';
+        routeValue.textContent = 'Fortnite Fast-Path Route';
+        if (statusClass) statusClass.className = 'signal optimal';
+      } else {
+        latencyText.textContent = '45ms';
+        latencyText.className = 'latency good';
+        routeLatency.textContent = '14ms';
+        routeLatency.className = 'latency good';
+        routeValue.textContent = 'Standard CloudPlay Route';
+        if (statusClass) statusClass.className = 'signal good';
+      }
+    });
+  }
+
+  const stressButton = document.querySelector('.primary-cta');
+  if (stressButton) {
+    stressButton.addEventListener('click', () => {
+      if (serverSelect) {
+        const current = serverSelect.value;
+        const nextPing = current === 'va' ? '8ms' : '14ms';
+        if (routeLatency) {
+          routeLatency.textContent = nextPing;
+          routeLatency.className = `latency ${current === 'va' ? 'optimal' : 'good'}`;
+        }
+        if (latencyText) {
+          latencyText.textContent = current === 'va' ? '12ms' : '45ms';
+          latencyText.className = `latency ${current === 'va' ? 'optimal' : 'good'}`;
+        }
+      }
+    });
+  }
+});

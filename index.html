@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CloudForce | Premium Cloud Gaming</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="auth-page">
+    <div class="page-grid"></div>
+
+    <main class="auth-shell">
+      <header class="auth-brand">
+        <div class="brand-mark">
+          <span></span>
+        </div>
+        <div class="brand-copy">
+          <p class="eyebrow">Premium cloud gaming</p>
+          <h1>CloudForce</h1>
+        </div>
+      </header>
+
+      <nav class="auth-tabs" aria-label="Authentication tabs">
+        <button class="tab active" type="button" data-tab="signin">Sign In</button>
+        <button class="tab" type="button" data-tab="signup">Create Account</button>
+      </nav>
+
+      <section class="auth-panel active" id="signin-panel">
+        <label class="field">
+          <span>Email Address</span>
+          <input type="email" value="gamer_tag_99@cloudforce.gg" />
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input type="password" value="••••••••••" />
+        </label>
+
+        <div class="aux-row">
+          <label class="checkbox">
+            <input type="checkbox" checked />
+            <span>Keep me signed in</span>
+          </label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <a class="primary-btn launch-link" href="dashboard.html">Launch Platform</a>
+      </section>
+
+      <section class="auth-panel" id="signup-panel">
+        <label class="field">
+          <span>Full Name</span>
+          <input type="text" value="Alex Mercer" />
+        </label>
+
+        <label class="field">
+          <span>Email Address</span>
+          <input type="email" value="alex@cloudforce.gg" />
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input type="password" value="••••••••••" />
+        </label>
+
+        <label class="field">
+          <span>Referral Code</span>
+          <input type="text" value="CF-RTX-2026" />
+        </label>
+
+        <a class="primary-btn launch-link" href="dashboard.html">Create Account</a>
+      </section>
+
+      <div class="divider"><span>or continue with</span></div>
+
+      <div class="oauth-grid">
+        <button class="oauth-btn epic" type="button">
+          <span class="logo"></span>
+          Continue with Epic Games
+        </button>
+        <button class="oauth-btn steam" type="button">
+          <span class="logo"></span>
+          Steam
+        </button>
+        <button class="oauth-btn discord" type="button">
+          <span class="logo"></span>
+          Discord
+        </button>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
